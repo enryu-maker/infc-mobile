@@ -22,3 +22,13 @@ export const LoginAction = (token) => {
       })
     }
   }
+  export const LogoutAction = () => {
+    return async dispatch => {
+        await AsyncStorage.clear();
+        token = null;
+      dispatch({
+        type: 'LOGIN',
+        payload: token,
+      })
+    }
+  }

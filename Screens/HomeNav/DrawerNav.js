@@ -7,17 +7,11 @@ import {
   TouchableOpacity,
   FlatList
 } from 'react-native';
-import Icon from 'react-native-vector-icons/Entypo';
 import React,{useContext} from 'react';
 import {DrawerContentScrollView, DrawerItem} from '@react-navigation/drawer';
 import {COLORS, SIZES, FONTS, images} from '../../Components/Theme/Theme';
-import axiosIns, { baseURL } from '../../Helper/Helper';
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
-import { Logout, UserData } from '../../Store/actions';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { createDrawerNavigator } from '@react-navigation/drawer';
-
+import { LogoutAction } from '../../Store/actions';
+import Icon from 'react-native-vector-icons/AntDesign';
 
 export default function Drawercontent(props) {
   return (
@@ -49,12 +43,15 @@ export default function Drawercontent(props) {
             props.navigation.closeDrawer()
           }}
           >
-            <Icon name="cross" size={30} color={COLORS.black} style={{
+            <Icon name="menu-unfold" size={30} color={COLORS.black} style={{
               alignSelf:"center"
             }}/>
           </TouchableOpacity>
         {/* <Drawer.Section style={[styles.drawerSection]}> */}
           <DrawerItem
+          icon={({color, size}) => (
+            <Icon name="home" color={COLORS.black} size={30} />
+          )}
             label="Home"
             labelStyle={[FONTS.body3, {letterSpacing: 2, color: COLORS.black}]}
             onPress={() => {
@@ -63,6 +60,9 @@ export default function Drawercontent(props) {
             }}
           />
           <DrawerItem
+          icon={({color, size}) => (
+            <Icon name="upload" color={COLORS.black} size={30} />
+          )}
             label="Upload"
             labelStyle={[FONTS.body3, {letterSpacing: 2, color: COLORS.black}]}
             onPress={() => {
@@ -71,6 +71,9 @@ export default function Drawercontent(props) {
             }}
           />
           <DrawerItem
+          icon={({color, size}) => (
+            <Icon name="adduser" color={COLORS.black} size={30} />
+          )}
             label="Add"
             labelStyle={[FONTS.body3, {letterSpacing: 2, color: COLORS.black}]}
             onPress={() => {
@@ -79,6 +82,9 @@ export default function Drawercontent(props) {
             }}
           />
           <DrawerItem
+          icon={({color, size}) => (
+            <Icon name="scan1" color={COLORS.black} size={30} />
+          )}
             label="Scan"
             labelStyle={[FONTS.body3, {letterSpacing: 2, color: COLORS.black}]}
             onPress={() => {
@@ -91,19 +97,16 @@ export default function Drawercontent(props) {
       {/* <Drawer.Section style={styles.bottomDrawerSection}> */}
         <DrawerItem
         style={{paddingBottom:25}}
-          // icon={({color, size}) => (
-          //   <Image
-          //     source={images.logout}
-          //     style={[{height: 25, width: 25, tintColor: "#ff4d4d"}]}
-          //   />
-          // )}
+          icon={({color, size}) => (
+            <Icon name="logout" color={COLORS.red} size={30} />
+          )}
           label="Logout"
           labelStyle={[
             FONTS.body3,
             {letterSpacing: 2, color: COLORS.red, fontWeight: 'bold'},
           ]}
           onPress={() => {
-            dispatch(Logout())
+            dispatch(LogoutAction())
           }}
         />
       {/* </Drawer.Section> */}

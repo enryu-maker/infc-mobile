@@ -8,7 +8,7 @@ import { COLORS, FONTS } from '../../Components/Theme/Theme'
 export default function Home({navigation}) {
   const [Data,setData] = React.useState([])
   React.useEffect(() => {
-    axiosIns.get(baseURL+'/api/user/getallstudents/')
+    axiosIns.get(baseURL+'/api/user/studentinfo/')
     .then((res) => {
       console.log(res.data)
       setData(res.data)

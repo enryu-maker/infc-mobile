@@ -9,6 +9,7 @@ const initialState = {
           ...state,
           access: action.payload,
         };
+      
       default:
         return state;
     }

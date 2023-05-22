@@ -1,26 +1,46 @@
-import { View, FlatList, Text, TouchableOpacity } from 'react-native'
+import { View, Text,TouchableOpacity } from 'react-native'
 import React from 'react'
+import { COLORS, FONTS, SIZES } from '../../Components/Theme/Theme'
 import { Header } from '../../Components/Header'
-import Menu from '../../Components/Buttons/Menu'
-import axiosIns, { baseURL } from '../../Helper/Helper'
-import { COLORS, FONTS } from '../../Components/Theme/Theme'
+import Back from '../../Components/Buttons/Back'
 import Icon from 'react-native-vector-icons/Feather';
+import axiosIns from '../../Helper/Helper'
 import Loader from '../../Components/Loader'
 
-export default function Scan({ navigation }) {
+export default function Tag({
+    navigation,
+    route
+}) {
     const [data, setData] = React.useState(null)
     const [loading, setLoading] = React.useState(false)
+    React.useEffect(() => {
+        setData(route.params.data)
+    }, [])
+
     const handleScan = () => {
         setLoading(true)
-        axiosIns.get('/device/operate/').then((res) => {
+        axiosIns.post('/device/operate/', {
+            prn: data?.prn
+        }
+        ).then((res) => {
             setLoading(false)
-            navigation.navigate("Scanop", {
-                data: res.data
-                })
-
-        }).catch((err) => {
+            setData(res.data)
             showMessage({
-                message: "Error while scanning",
+                message:data?.tag_id === null ? "Successfully Assigned" : "Successfully Updated",
+                type: "Success",
+                backgroundColor: COLORS.green,
+                color:COLORS.white,
+                titleStyle:{
+                  alignSelf:"center",
+                  ...FONTS.h3
+                },
+                animationDuration:250
+              });
+        }
+        ).catch((err) => {
+            setLoading(false)
+            showMessage({
+                message:"Error while scanning",
                 type: "Error",
                 backgroundColor: COLORS.red,
                 color:COLORS.white,
@@ -30,24 +50,28 @@ export default function Scan({ navigation }) {
                 },
                 animationDuration:250
               });
-            setLoading(false)
-        })
+        }
+        )
     }
+
+
     return (
-        <View
-            style={{
-                flex: 1,
-                backgroundColor: COLORS.Primary1
-            }}
-        >
+
+        <View style={{
+            flex: 1,
+            backgroundColor: COLORS.Primary1
+        }}>
             <Loader loading={loading} />
             <Header
-                leftComponent={<Menu
-                    onPress={() => {
-                        navigation.openDrawer()
-                    }}
-                />}
-                title={"SCAN"}
+                title={data?.tag_id === null ? "ASSIGN TAG" : "UPDATE TAG"}
+                leftComponent={
+                    <Back
+                        onPress={() => {
+                            navigation.goBack()
+                        }
+                        }
+                    />
+                }
                 rightComponent={<View
                     style={{
                         height: 45,
@@ -89,7 +113,7 @@ export default function Scan({ navigation }) {
                         ...FONTS.h2,
                         color: COLORS.black
                     }}
-                >{"SCAN"}</Text>
+                >{data?.tag_id === null ? "ASSIGN" : "UPDATE"}</Text>
             </TouchableOpacity>
         </View>
     )

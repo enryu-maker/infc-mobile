@@ -7,6 +7,7 @@ import { baseURL } from '../../Helper/Helper'
 import { LoginAction } from '../../Store/actions'
 import { useDispatch } from 'react-redux'
 import Loader from '../../Components/Loader'
+import { showMessage } from 'react-native-flash-message';
 export default function Login() {
     const dispatch = useDispatch()
     const [Email, setEmail] = React.useState("")
@@ -19,13 +20,23 @@ export default function Login() {
             password: Passwd,
         }
         ).then((res) => {
-            console.log(res.data.token.access)
             dispatch(LoginAction(res.data.token.access))
             setLoading(false)
         }
         ).catch((err) => {
             console.log(err.request)
             setLoading(false)
+            showMessage({
+                message: "Invalid Email or Password",
+                type: "Error",
+                backgroundColor: COLORS.red,
+                color:COLORS.white,
+                titleStyle:{
+                  alignSelf:"center",
+                  ...FONTS.h3
+                },
+                animationDuration:250
+              });
         }
         )
     }

@@ -1,18 +1,25 @@
-import { View, Text, ScrollView } from 'react-native'
+import { View, Text, ScrollView, Image, TouchableOpacity } from 'react-native'
 import React from 'react'
-import { COLORS, FONTS } from '../../Components/Theme/Theme'
+import { COLORS, FONTS, SIZES } from '../../Components/Theme/Theme'
 import { Header } from '../../Components/Header'
 import Back from '../../Components/Buttons/Back'
 import Details from '../../Components/Details'
-import ImageViewer from 'react-native-image-zoom-viewer';
+import ImageView from "react-native-image-viewing";
+import { baseURL } from '../../Helper/Helper'
 export default function ScanOp({
     navigation,
     route
 }) {
+    const [data, setData] = React.useState(null)
+    React.useEffect(() => {
+        setData(route.params.data)
+    }, [])
+
     const images = [{
-        url: 'https://avatars2.githubusercontent.com/u/7970947?v=3&s=460',
+        uri: baseURL + data?.hallticket,
     }
     ]
+    const [visible, setIsVisible] = React.useState(false);
     return (
         <View style={{
             flex: 1,
@@ -39,23 +46,65 @@ export default function ScanOp({
             <ScrollView>
                 <Details
                     title={"NAME"}
-                    value={"Akif Abualam Khan"}
+                    value={data?.name}
                 />
                 <Details
                     title={"PRN"}
-                    value={"72035217H"}
+                    value={data?.prn}
                 />
                 <Details
                     title={"YEAR"}
-                    value={"2019"}
+                    value={data?.year}
                 />
                 <Details
                     title={"DEPARTMENT"}
-                    value={"Computer Engineering"}
+                    value={data?.department}
                 />
-                <ImageViewer 
-                enableImageZoom={true}
-                imageUrls={images}/>
+                <Text
+                    style={{
+                        ...FONTS.h3,
+                        color: COLORS.black,
+                        marginTop: 24,
+                        alignSelf: "center"
+                    }}
+                >HALL TICKET</Text>
+
+                <TouchableOpacity
+                style={{
+                    shadowColor: "#000000",
+                    shadowOffset: {
+                        width: 0,
+                        height: 4,
+                    },
+                    shadowOpacity: 0.27,
+                    shadowRadius: 4.65,
+                    elevation: 6,
+                }}
+                    onPress={() => {
+                        setIsVisible(true)
+                    }}
+                >
+                    <Image
+
+                        source={{ uri: baseURL + data?.hallticket }}
+                        style={{
+                            width: "88%",
+                            height: 450,
+                            alignSelf: "center",
+                            margin: 12,
+                            borderRadius: SIZES.radius,
+                            resizeMode: "contain",
+                            borderColor: COLORS.black,
+                            
+                        }}
+                    />
+                </TouchableOpacity>
+                <ImageView
+                    images={images}
+                    imageIndex={0}
+                    visible={visible}
+                    onRequestClose={() => setIsVisible(false)}
+                />
             </ScrollView>
 
         </View>

@@ -4,20 +4,12 @@ import { Header } from '../../Components/Header'
 import Menu from '../../Components/Buttons/Menu'
 import axiosIns, { baseURL } from '../../Helper/Helper'
 import { COLORS, FONTS } from '../../Components/Theme/Theme'
-
+import { useDispatch } from 'react-redux'
+import { GetstudentAction } from '../../Store/actions'
+import { useSelector } from 'react-redux'
+import Loader from '../../Components/Loader'
 export default function Home({navigation}) {
-  const [Data,setData] = React.useState([])
-  React.useEffect(() => {
-    axiosIns.get(baseURL+'/api/user/studentinfo/')
-    .then((res) => {
-      console.log(res.data)
-      setData(res.data)
-    }
-    ).catch((err) => {
-      console.log(err)
-    }
-    )
-  }, [])
+  const Data = useSelector(state => state.Reducers.students);
   return (
     <View
     style={{
@@ -25,6 +17,7 @@ export default function Home({navigation}) {
       backgroundColor:COLORS.Primary1
     }}
     >
+
        <Header 
       leftComponent={<Menu
       onPress={() => {
@@ -63,6 +56,12 @@ export default function Home({navigation}) {
                 shadowRadius: 4.65,
                 elevation: 6,
         }}
+        onPress={()=>{
+          navigation.navigate("List",{
+            data:item.students
+          })
+        }
+        }
         >
           <Text style={{
             color:COLORS.black,

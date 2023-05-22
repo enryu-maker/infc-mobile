@@ -1,5 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import axiosIns from "../Helper/Helper";
+import axiosIns, { baseURL } from "../Helper/Helper";
 
 export const Init = () => {
   return async dispatch => {
@@ -19,6 +19,16 @@ export const LoginAction = (token) => {
       dispatch({
         type: 'LOGIN',
         payload: token,
+      })
+    }
+  }
+  export const GetstudentAction = () => {
+    return async dispatch => {
+      const response = await axiosIns.get(baseURL + '/api/user/getallstudents/');
+      console.log(response.data)
+      dispatch({
+        type: 'STUDENTS',
+        payload: response.data,
       })
     }
   }

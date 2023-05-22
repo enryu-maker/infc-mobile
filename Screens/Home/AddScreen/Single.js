@@ -36,12 +36,32 @@ export default function Single({
                 'Content-Type': 'application/json'
             }
         }).then((res) => {
-            console.log(res.data)
             setLoading(false)
+            showMessage({
+                message:"Successfully Added Student",
+                type: "Success",
+                backgroundColor: COLORS.green,
+                color:COLORS.white,
+                titleStyle:{
+                  alignSelf:"center",
+                  ...FONTS.h3
+                },
+                animationDuration:250
+              });
         }
         ).catch((err) => {
-            console.log(err.request)
             setLoading(false)
+            showMessage({
+                message:"Error while adding student",
+                type: "Success",
+                backgroundColor: COLORS.green,
+                color:COLORS.white,
+                titleStyle:{
+                  alignSelf:"center",
+                  ...FONTS.h3
+                },
+                animationDuration:250
+              });
         }
         )
     }

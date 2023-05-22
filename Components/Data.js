@@ -2,30 +2,30 @@ export const YEAR = [
     {
         id: 1,
         label: "FE",
-        value: "FE"
+        value: "fe"
     },
     {
         id: 2,
         label: "SE",
-        value: "SE"
+        value: "se"
     },
     {
         id: 3,
         label: "TE",
-        value: "TE"
+        value: "te"
     },
     {
         id: 4,
         label: "BE",
-        value: "BE"
+        value: "be"
     },
 ]
 
 export const BRANCH = [
     {
         id: 1,
-        label: "Computer",
-        value: "Computer"
+        label: "computer",
+        value: "computer"
     },
     {
         id: 2,
@@ -34,13 +34,13 @@ export const BRANCH = [
     },
     {
         id: 3,
-        label: "Mechanical",
-        value: "Mechanical"
+        label: "mechanical",
+        value: "mechanical"
     },
     {
         id: 4,
-        label: "Civil",
-        value: "Civil"
+        label: "civil",
+        value: "civil"
     },
     {
 

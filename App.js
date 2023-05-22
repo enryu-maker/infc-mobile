@@ -1,4 +1,4 @@
-import { View, Text, ActivityIndicator } from 'react-native'
+import { View, Text, ActivityIndicator, Platform, StatusBar } from 'react-native'
 import React from 'react'
 import { COLORS } from './Components/Theme/Theme'
 import Homenav from './Screens/HomeNav/Homenav'
@@ -8,6 +8,7 @@ import Login from './Screens/Login/Login'
 import {Provider, useDispatch, useSelector} from 'react-redux';
 import {Init} from './Store/actions';
 import { NavigationContainer } from '@react-navigation/native';
+import FlashMessage from 'react-native-flash-message';
 const RootNavigation = () => {
   const token = useSelector(state => state.Reducers.access);
   console.log(token)
@@ -36,7 +37,7 @@ const RootNavigation = () => {
 
   return (
     <NavigationContainer>
-      {/* <FlashMessage position="top" /> */}
+      <FlashMessage position="top" />
       {token === null ? <Login /> : <Homenav />}
     </NavigationContainer>
   );
@@ -45,6 +46,10 @@ export default function App() {
   
   return (
     <Provider store={store}>
+      <StatusBar
+            barStyle={Platform.OS == 'android' ? 'default' : 'dark-content'}
+            backgroundColor={'black'}
+          />
       <RootNavigation />
     </Provider>
   )

@@ -12,8 +12,10 @@ import {DrawerContentScrollView, DrawerItem} from '@react-navigation/drawer';
 import {COLORS, SIZES, FONTS, images} from '../../Components/Theme/Theme';
 import { LogoutAction } from '../../Store/actions';
 import Icon from 'react-native-vector-icons/AntDesign';
+import { useDispatch } from 'react-redux';
 
 export default function Drawercontent(props) {
+  const dispatch = useDispatch()
   return (
     <View style={{flex: 1}}>
       <DrawerContentScrollView
@@ -38,6 +40,7 @@ export default function Drawercontent(props) {
             elevation: 6,
             alignSelf:"flex-end",
             marginRight:20,
+            marginTop:8
           }}
           onPress={()=>{
             props.navigation.closeDrawer()

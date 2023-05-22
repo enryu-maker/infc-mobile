@@ -15,21 +15,42 @@ export default function Upload({ navigation }) {
     const uploadData = () => {
         setLoading(true)
         const formData = new FormData();
-        formData.append('file', File);
+        formData.append('hallticket', File);
         formData.append('year', Year);
         formData.append('pattern', Pattern);
         formData.append('department', Dept);
-        axiosIns.post(baseURL + '/api/user/upload/', formData, {
+        axiosIns.post(baseURL + '/api/user/uploadpdf/', formData, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             }
         }).then((res) => {
-            console.log(res.data)
             setLoading(false)
+            showMessage({
+                message:"Successfully Uploaded PDF",
+                type: "Success",
+                backgroundColor: COLORS.green,
+                color:COLORS.white,
+                titleStyle:{
+                  alignSelf:"center",
+                  ...FONTS.h3
+                },
+                animationDuration:250
+              });
         }
         ).catch((err) => {
             console.log(err)
             setLoading(false)
+            showMessage({
+                message:"Error while uploading PDF",
+                type: "Error",
+                backgroundColor: COLORS.red,
+                color:COLORS.white,
+                titleStyle:{
+                  alignSelf:"center",
+                  ...FONTS.h3
+                },
+                animationDuration:250
+              });
         }
         )
     }

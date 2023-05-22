@@ -7,6 +7,7 @@ export default function Picker({
     setFile,
     type
 }) {
+    const [file, setfile] = React.useState(null)
     const selectDoc = async () => {
         try {
             const doc = await DocumentPicker.pickSingle({
@@ -14,6 +15,7 @@ export default function Picker({
             })
             console.log(doc)
             setFile(doc)
+            setfile(doc)
         } catch (err) {
             if (DocumentPicker.isCancel(err))
                 console.log("User cancelled the upload", err);
@@ -44,7 +46,7 @@ export default function Picker({
                 elevation: 6,
             }}
         >
-            <Text style={{ ...FONTS.h2, color: COLORS.black }}>Select Document</Text>
+            <Text style={{ ...FONTS.h2, color: COLORS.black }}>{file===null?"Select Document":file.name}</Text>
         </TouchableOpacity>
     );
 }

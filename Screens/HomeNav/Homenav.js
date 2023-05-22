@@ -11,6 +11,10 @@ import Add from '../Home/Add';
 import Single from '../Home/AddScreen/Single';
 import Multi from '../Home/AddScreen/Multi';
 import ScanOp from '../Home/ScanOp';
+import StudentInfo from '../Home/StudentInfo';
+import Tag from '../Home/Tag';
+import { useDispatch } from 'react-redux';
+import { GetstudentAction } from '../../Store/actions';
 const Drawer = createDrawerNavigator();
 const DrawerNav = () => {
   return (
@@ -38,8 +42,13 @@ const DrawerNav = () => {
 }
 export default function Homenav() {
   const Stack = createNativeStackNavigator();
-
-
+  const dispatch = useDispatch()
+  const init = async () => {
+    await dispatch(GetstudentAction());
+  };
+  React.useEffect(() => {
+    init();
+  }, []);
   return (
     <Stack.Navigator
       screenOptions={({ navigation }) => {
@@ -54,6 +63,10 @@ export default function Homenav() {
       <Stack.Screen name="Single" component={Single} />
       <Stack.Screen name="Multi" component={Multi} />
       <Stack.Screen name="Scanop" component={ScanOp} />
+      <Stack.Screen name="List" component={StudentInfo} />
+      <Stack.Screen name="Tag" component={Tag} />
+
+
 
 
     </Stack.Navigator>

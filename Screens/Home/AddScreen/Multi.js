@@ -10,6 +10,7 @@ import Picker from '../../../Components/Picker'
 import DocumentPicker from 'react-native-document-picker';
 
 import axiosIns, { baseURL } from '../../../Helper/Helper'
+import Loader from '../../../Components/Loader'
 export default function Multi({
     navigation
 }) {
@@ -21,21 +22,42 @@ export default function Multi({
     const uploadData = () => {
         setLoading(true)
         const formData = new FormData();
-        formData.append('file', File);
+        formData.append('student_csv', File);
         formData.append('year', Year);
         formData.append('pattern', Pattern);
         formData.append('dept', Dept);
+        console.log(formData)
         axiosIns.post(baseURL + '/api/user/addmultistudent/', formData, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             }
         }).then((res) => {
-            console.log(res.data)
             setLoading(false)
+            showMessage({
+                message:"Successfully Uploaded CSV",
+                type: "Success",
+                backgroundColor: COLORS.green,
+                color:COLORS.white,
+                titleStyle:{
+                  alignSelf:"center",
+                  ...FONTS.h3
+                },
+                animationDuration:250
+              });
         }
         ).catch((err) => {
-            console.log(err)
             setLoading(false)
+            showMessage({
+                message:"Error while uploading CSV",
+                type: "Error",
+                backgroundColor: COLORS.red,
+                color:COLORS.white,
+                titleStyle:{
+                  alignSelf:"center",
+                  ...FONTS.h3
+                },
+                animationDuration:250
+              });
         }
         )
     }
@@ -45,6 +67,7 @@ export default function Multi({
             flex: 1,
             backgroundColor: COLORS.Primary1
         }}>
+            <Loader loading={loading} />
             <Header
                 leftComponent={
                     <Back
@@ -97,6 +120,7 @@ export default function Multi({
                     bottom: 0
                 }}
                 onPress={() => {
+                    uploadData()
                 }
                 }
             >

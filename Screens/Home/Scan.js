@@ -6,7 +6,7 @@ import axiosIns, { baseURL } from '../../Helper/Helper'
 import { COLORS, FONTS } from '../../Components/Theme/Theme'
 import Icon from 'react-native-vector-icons/Feather';
 import Loader from '../../Components/Loader'
-
+import { showMessage } from 'react-native-flash-message'
 export default function Scan({ navigation }) {
     const [data, setData] = React.useState(null)
     const [loading, setLoading] = React.useState(false)

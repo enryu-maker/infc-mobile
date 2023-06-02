@@ -6,7 +6,7 @@ import Back from '../../Components/Buttons/Back'
 import Icon from 'react-native-vector-icons/Feather';
 import axiosIns from '../../Helper/Helper'
 import Loader from '../../Components/Loader'
-
+import { showMessage } from 'react-native-flash-message'
 export default function Tag({
     navigation,
     route

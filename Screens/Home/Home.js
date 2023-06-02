@@ -1,4 +1,4 @@
-import { View, FlatList,Text, TouchableOpacity } from 'react-native'
+import { View, FlatList,Text, TouchableOpacity, RefreshControl, ScrollView } from 'react-native'
 import React from 'react'
 import { Header } from '../../Components/Header'
 import Menu from '../../Components/Buttons/Menu'
@@ -10,6 +10,8 @@ import { useSelector } from 'react-redux'
 import Loader from '../../Components/Loader'
 export default function Home({navigation}) {
   const Data = useSelector(state => state.Reducers.students);
+  const [Refresh,setRefresh] = React.useState(false)
+  const dispatch = useDispatch()
   return (
     <View
     style={{
@@ -17,14 +19,16 @@ export default function Home({navigation}) {
       backgroundColor:COLORS.Primary1
     }}
     >
-
+      
+      {/* <ScrollView
+      > */}
        <Header 
       leftComponent={<Menu
       onPress={() => {
         navigation.openDrawer()
       }}
       />}
-      title={"INFC"}
+      title={Refresh?"Refreshing":"INFC"}
       rightComponent={<View 
       style={{
         height: 45,
@@ -33,6 +37,19 @@ export default function Home({navigation}) {
       }}
       ></View>}
       />
+      
+      <ScrollView>
+      <RefreshControl 
+      refreshing={Refresh}
+      onRefresh={()=>{
+        setRefresh(true)
+        dispatch(GetstudentAction())
+        setTimeout(()=>{
+          setRefresh(false)
+        },2000)
+      }}
+      />
+      </ScrollView>
       <FlatList
         data={Data}
         renderItem={({item}) => 
